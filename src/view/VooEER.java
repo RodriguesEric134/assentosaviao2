@@ -6,34 +6,41 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static model.funcoes_DAO.assentosVooEER;
-
 public class VooEER extends JFrame {
-
+    public static String option = "";
+    public static int op;
+    public static int x = 1;
     private JButton sairButton;
     private JTextField digiteSeuAssentoTextField;
-    private JLabel[] assentosLabels = new JLabel[6];
+
+    private JLabel assento_1;
+    private JLabel assento_2;
+    private JLabel assento_3;
+    private JLabel assento_4;
+    private JLabel assento_5;
+    private JLabel assento_6;
     private JPanel EER;
 
-    public VooEER(){
+    public VooEER() {
         setContentPane(EER);
-        setTitle("VOO: EER-134");
-        setSize(450, 300);
+        setTitle("VooEER-134");
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
-
-        for (int i = 0; i < assentosLabels.length; i++) {
-            assentosLabels[i] = new JLabel();
-            assentosLabels[i].setText(assentosVooEER[i]);
-            assentosLabels[i].setName("assento_" + (i + 1));
-            EER.add(assentosLabels[i]);
-        }
+        assento_1.setText(funcoes_DAO.assentosEER[0]);
+        assento_2.setText(funcoes_DAO.assentosEER[1]);
+        assento_3.setText(funcoes_DAO.assentosEER[2]);
+        assento_4.setText(funcoes_DAO.assentosEER[3]);
+        assento_5.setText(funcoes_DAO.assentosEER[4]);
+        assento_6.setText(funcoes_DAO.assentosEER[5]);
 
         sairButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Menu_Graf_GUI telaMenu = new Menu_Graf_GUI();
-                telaMenu.setVisible(true);
+                Menu_Graf_GUI tela = new Menu_Graf_GUI();
+                tela.setVisible(true);
+                setLocationRelativeTo(null);
                 dispose();
             }
         });
@@ -42,15 +49,22 @@ public class VooEER extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int op = Integer.parseInt(digiteSeuAssentoTextField.getText());
-                    funcoes_DAO.VooEER(op);
+                    option = digiteSeuAssentoTextField.getText();
+                    op = Integer.parseInt(option); // converte o valor digitado em um inteiro
 
-                    for (int i = 0; i < assentosLabels.length; i++) {
-                        assentosLabels[i].setText(funcoes_DAO.assentosVooEER[i]);
+                    if (op < 1 || op > 6) {
+                        throw new IllegalArgumentException("O valor inválido!");
                     }
+                    funcoes_DAO.reservaEER();
+                    assento_1.setText(funcoes_DAO.assentosEER[0]);
+                    assento_2.setText(funcoes_DAO.assentosEER[1]);
+                    assento_3.setText(funcoes_DAO.assentosEER[2]);
+                    assento_4.setText(funcoes_DAO.assentosEER[3]);
+                    assento_5.setText(funcoes_DAO.assentosEER[4]);
+                    assento_6.setText(funcoes_DAO.assentosEER[5]);
 
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Por favor, insira um número válido.");
+                    JOptionPane.showMessageDialog(null, "Insira um número válido.");
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }

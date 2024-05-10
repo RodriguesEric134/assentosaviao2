@@ -12,9 +12,10 @@ public class Menu_Graf_GUI extends JFrame{
     public Menu_Graf_GUI() {
         setContentPane(menu);
         setTitle("Menu");
-        setSize(450, 300);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
+        setLocationRelativeTo(null);
 
 
         //Voo 1
